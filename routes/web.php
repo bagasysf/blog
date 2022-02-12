@@ -18,21 +18,23 @@ Route::get('/', function () {
 });
 
 Route::get('/posts/{post}', function ($slug) {
-    $path = __DIR__ . "/../resources/posts/{$slug}.html";
-
     // dd($path);
 
-    if (!file_exists($path)) {
+    if (!file_exists($path = __DIR__ . "/../resources/posts/{$slug}.html")) {
         // dd('file does not exist');
         // abort(404);
         // return view('posts');
         return redirect('/');
     }
 
-    $post = file_get_contents($path);
 
-    return view('post', [
-        'post' => $post
-    ]);
+    // $post = cache()->remember("posts.{$slug}", /*now()->addMinute(20)*/ 5, function () use ($path) {
+    //     // var_dump('file_get_contents');
+    //     return file_get_contents($path);
+    // });
+
+    $post = cache()->remember("posts.{$slug}", 5, fn () => file_get_contents($path));
+
+    return view('post', ['post' => $post]);
     // })->whereAlpha('post');
 })->where('post', '[A-z_/-]+');
