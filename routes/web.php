@@ -13,15 +13,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/posts', function () {
+Route::get('/', function () {
     return view('posts');
 });
 
 Route::get('/posts/{post}', function ($slug) {
     $path = __DIR__ . "/../resources/posts/{$slug}.html";
 
+    // dd($path);
+
     if (!file_exists($path)) {
-        dd('file does not exist');
+        // dd('file does not exist');
+        // abort(404);
+        // return view('posts');
+        return redirect('/');
     }
 
     $post = file_get_contents($path);
@@ -29,4 +34,5 @@ Route::get('/posts/{post}', function ($slug) {
     return view('post', [
         'post' => $post
     ]);
-});
+    // })->whereAlpha('post');
+})->where('post', '[A-z_/-]+');
