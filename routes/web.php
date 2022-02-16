@@ -26,3 +26,5 @@ Route::get('/posts/{post}', function ($id) {
         'post' => Post::findOrFail($id)
     ]);
 });
+
+
