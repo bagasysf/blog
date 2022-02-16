@@ -10,3 +10,4 @@
         </article>
     @endforeach
 </x-layout>
+
