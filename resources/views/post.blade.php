@@ -41,7 +41,7 @@
                     <h1 class="font-bold text-4xl mb-10">{{ $post->title }}</h1>
 
                     <div class="space-y-4 text-lg">
-                        <p>{{ $post->body }}</p>
+                        {!! $post->body !!}
                     </div>
                 </div>
             </article>
